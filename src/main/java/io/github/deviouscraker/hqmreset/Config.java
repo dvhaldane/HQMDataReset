@@ -8,7 +8,7 @@ public class Config {
 	// how long (in ticks) to wait before checking the size again
 	private long waitTime = 0;
 
-	public Config(HQMReset instance) {
+	public Config(HQMDataReset instance) {
 		instance.getConfig().options().copyDefaults(true);
 		instance.saveDefaultConfig();
 		
