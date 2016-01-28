@@ -43,6 +43,6 @@
    <properties>
    	<version>1.0.1</version>
    	<package>io.github.deviouscraker.hqmreset</package>
-   	<name>HQMReset</name>
+   	<name>HQMDataReset</name>
    </properties>
 </project>
