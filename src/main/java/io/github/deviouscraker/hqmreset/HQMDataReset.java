@@ -14,8 +14,6 @@ public class HQMDataReset extends JavaPlugin {
 	private Config config;
 	private File mainFile;
 	
-	private boolean checkFile;
-	
 	@Override
 	public void onEnable() {
 		this.reloadConfig();
@@ -23,22 +21,20 @@ public class HQMDataReset extends JavaPlugin {
 		
 		this.getCommand("hqmdatareset").setExecutor(new CommandExec(this));
 		
-		new File(this.getDataFolder() + File.separator + "Backup").mkdir();
 		reloadMain();
-		
-		checkFile = mainFile.exists();
 		
 		new BukkitRunnable() {
 			
 			@Override
 			public void run() {
-				if (checkFile) {
+				if (mainFile.exists()) { // if it doesn't exist there will be an issue with getting the length
 					if (mainFile.length() >= config.getMaxSize()) {
 						resetMainFile(getServer().getConsoleSender());
 					}
 				}
 			}
-		}.runTaskTimer(this, 0L, config.getWaitTime());
+		}.runTaskTimer(this, 0L, config.getWaitTime()); // checks to see if there is a file every x seconds
+								// where x = the value of waitTime in the config.
 	}
 	
 	public void reloadMain() {
@@ -52,10 +48,10 @@ public class HQMDataReset extends JavaPlugin {
 	// It takes in a CommandSender argument to be able to send a message back to the caller
 	public void resetMainFile(CommandSender sender) {
 		try {
-			if (!mainFile.exists()) {
+			if (!mainFile.exists()) { // if it doesn't exist, just run the /hqm quest command
 				this.getServer().dispatchCommand(this.getServer().getConsoleSender(), "hqm quest");
 				sender.sendMessage(ChatColor.GOLD + "Reset Successful!");			
-			} else {
+			} else { //  if it does exist, delete it then run the command.
 				Files.delete(mainFile.toPath());
 				this.getServer().dispatchCommand(this.getServer().getConsoleSender(), "hqm quest");
 				sender.sendMessage(ChatColor.GOLD + "Reset Successful!");
