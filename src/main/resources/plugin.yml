@@ -4,11 +4,10 @@ version: ${version}
 authors: [DeviousCraker]
 
 commands:
-   hqmreset:
+   hqmdatareset:
       description: Manage
-      aliases: hr
 
 permissions:
-    hqmreset.manage:
+    hqmdatareset.manage:
         description: Manage
         default: op
