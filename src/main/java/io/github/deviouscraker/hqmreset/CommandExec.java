@@ -9,16 +9,16 @@ public class CommandExec implements CommandExecutor {
 	
 	private static final String NO_PERMISSION = ChatColor.DARK_RED + "Insufficient permissions.";
 	
-	private HQMReset instance;
+	private HQMDataReset instance;
 	
-	public CommandExec(HQMReset instance) {
+	public CommandExec(HQMDataReset instance) {
 		this.instance = instance;
 	}
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (cmd.getName().equals("hqmreset")) {
-			if (!sender.hasPermission("hqmreset.manage")) {
+		if (cmd.getName().equals("hqmdatareset")) {
+			if (!sender.hasPermission("hqmdatareset.manage")) {
 				sender.sendMessage(NO_PERMISSION);
 				return false;
 			}
@@ -39,7 +39,7 @@ public class CommandExec implements CommandExecutor {
 			} else if (args[0].equals("reload")) {
 				instance.getPluginLoader().disablePlugin(instance);
 				instance.getPluginLoader().enablePlugin(instance);
-				sender.sendMessage("HQMReset has been reloaded.");
+				sender.sendMessage("HQMDataReset has been reloaded.");
 				return true;
 			} else if (args[0].equals("reset")) {
 				instance.resetMainFile(sender);
