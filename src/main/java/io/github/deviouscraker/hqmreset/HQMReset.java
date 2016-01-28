@@ -21,6 +21,7 @@ public class HQMReset extends JavaPlugin {
 	
 	@Override
 	public void onEnable() {
+		this.reloadConfig();
 		this.config = new Config(this);
 		
 		this.getCommand("hqmreset").setExecutor(new CommandExec(this));
