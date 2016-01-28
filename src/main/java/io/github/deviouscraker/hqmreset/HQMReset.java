@@ -1,9 +1,7 @@
 package io.github.deviouscraker.hqmreset;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.util.logging.Level;
 
 import org.bukkit.ChatColor;
@@ -14,7 +12,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class HQMReset extends JavaPlugin {
 	
 	private Config config;
-	private File backupFile;
 	private File mainFile;
 	
 	private boolean checkFile;
@@ -27,7 +24,6 @@ public class HQMReset extends JavaPlugin {
 		this.getCommand("hqmreset").setExecutor(new CommandExec(this));
 		
 		new File(this.getDataFolder() + File.separator + "Backup").mkdir();
-		backupFile = new File(this.getDataFolder() + File.separator + "Backup" + File.separator + "players.dat");
 		reloadMain();
 		
 		checkFile = mainFile.exists();
@@ -53,18 +49,20 @@ public class HQMReset extends JavaPlugin {
 		return mainFile;
 	}
 	
-	public File getBackupFile() {
-		return backupFile;
-	}
-	
 	// It takes in a CommandSender argument to be able to send a message back to the caller
 	public void resetMainFile(CommandSender sender) {
 		try {
-			Files.copy(getBackupFile().toPath(), getMainFile().toPath(), StandardCopyOption.REPLACE_EXISTING);
-			sender.sendMessage(ChatColor.GOLD + "Reset Successful!");
-		} catch (IOException e) {
+			if (!mainFile.exists()) {
+				this.getServer().dispatchCommand(this.getServer().getConsoleSender(), "hqm quest");
+				sender.sendMessage(ChatColor.GOLD + "Reset Successful!");			
+			} else {
+				Files.delete(mainFile.toPath());
+				this.getServer().dispatchCommand(this.getServer().getConsoleSender(), "hqm quest");
+				sender.sendMessage(ChatColor.GOLD + "Reset Successful!");
+			}
+		} catch (Exception e) {
 			getLogger().log(Level.SEVERE, "Reset Failed!", e);
-			sender.sendMessage(ChatColor.DARK_RED + "Backup Failed!");
+			sender.sendMessage(ChatColor.DARK_RED + "Reset Failed!");
 		}
 	}
 }
