@@ -1,0 +1,9 @@
+# The max size of the players.dat file before it is removed.
+# This is in kilobytes (kb)
+# Default: 4096 (4 mb)
+maxSize: 4096
+
+# How long to wait before checking again
+# This is in seconds, although it converts to ticks.
+# Default: 60s
+waitTime: 60

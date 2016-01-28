@@ -1,0 +1,14 @@
+name: ${name}
+main: ${package}.${name}
+version: ${version}
+authors: [DeviousCraker]
+
+commands:
+   hqmreset:
+      description: Manage
+      aliases: hr
+
+permissions:
+    hqmreset.manage:
+        description: Manage
+        default: op
