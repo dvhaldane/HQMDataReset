@@ -48,14 +48,11 @@ public class HQMDataReset extends JavaPlugin {
 	// It takes in a CommandSender argument to be able to send a message back to the caller
 	public void resetMainFile(CommandSender sender) {
 		try {
-			if (!mainFile.exists()) { // if it doesn't exist, just run the /hqm quest command
-				this.getServer().dispatchCommand(this.getServer().getConsoleSender(), "hqm quest");
-				sender.sendMessage(ChatColor.GOLD + "Reset Successful!");			
-			} else { //  if it does exist, delete it then run the command.
+			if (mainFile.exists()) { //  if it does exist, delete it
 				Files.delete(mainFile.toPath());
-				this.getServer().dispatchCommand(this.getServer().getConsoleSender(), "hqm quest");
-				sender.sendMessage(ChatColor.GOLD + "Reset Successful!");
 			}
+			this.getServer().dispatchCommand(this.getServer().getConsoleSender(), "hqm quest");
+			sender.sendMessage(ChatColor.GOLD + "Reset Successful!");
 		} catch (Exception e) {
 			getLogger().log(Level.SEVERE, "Reset Failed!", e);
 			sender.sendMessage(ChatColor.DARK_RED + "Reset Failed!");
